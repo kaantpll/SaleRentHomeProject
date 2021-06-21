@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">SaleRentHomeProject</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="saleOrRent">
+        <item>Sale</item>
+        <item>Rent</item>
+
+    </string-array>
 </resources>
