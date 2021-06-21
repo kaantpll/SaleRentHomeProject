@@ -38,6 +38,12 @@ public class LogInActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
 
+        if(firebaseUser !=  null){
+            Intent intent = new Intent(LogInActivity.this,FeedActivity.class);
+            startActivity(intent);
+        }
+
+
         noHaveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
