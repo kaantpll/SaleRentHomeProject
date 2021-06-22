@@ -10,12 +10,17 @@ public class Post {
     private String bedCount;
     private String rentOrSale;
     private String bathCount;
+    private String imageUrl;
+    private String price;
+    private String location;
+
+
 
     public Post(){
 
     }
 
-    public Post(String phone, String description, String attribute, String sq, String bedCount, String rentOrSale, String bathCount) {
+    public Post(String phone, String description, String attribute, String sq, String bedCount, String rentOrSale, String bathCount,String imageUrl,String price,String location) {
         this.phone = phone;
         this.description = description;
         this.attribute = attribute;
@@ -23,6 +28,9 @@ public class Post {
         this.bedCount = bedCount;
         this.rentOrSale = rentOrSale;
         this.bathCount = bathCount;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.location = location;
     }
 
     public String getPhone() {
@@ -79,5 +87,28 @@ public class Post {
 
     public void setBathCount(String bathCount) {
         this.bathCount = bathCount;
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
