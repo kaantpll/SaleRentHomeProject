@@ -1,18 +1,32 @@
 package com.example.salerenthomeproject.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "posts")
 public class Post {
 
+    @ColumnInfo(name = "phone")
     private String phone;
+    @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "attribute")
     private String attribute;
+    @ColumnInfo(name = "sq")
     private String sq;
+    @ColumnInfo(name = "bedCount")
     private String bedCount;
+    @ColumnInfo(name = "rentOrSale")
     private String rentOrSale;
+    @ColumnInfo(name = "bathCount")
     private String bathCount;
+    @ColumnInfo(name = "mImageUrl")
     private String imageUrl;
+    @ColumnInfo(name = "price")
     private String price;
-    private String location;
+    @PrimaryKey
+    private int id ;
 
 
 
@@ -20,7 +34,7 @@ public class Post {
 
     }
 
-    public Post(String phone, String description, String attribute, String sq, String bedCount, String rentOrSale, String bathCount,String imageUrl,String price,String location) {
+    public Post(String phone, String description, String attribute, String sq, String bedCount, String rentOrSale, String bathCount,String imageUrl,String price) {
         this.phone = phone;
         this.description = description;
         this.attribute = attribute;
@@ -30,7 +44,7 @@ public class Post {
         this.bathCount = bathCount;
         this.imageUrl = imageUrl;
         this.price = price;
-        this.location = location;
+
     }
 
     public String getPhone() {
@@ -104,11 +118,5 @@ public class Post {
         this.price = price;
     }
 
-    public String getLocation() {
-        return location;
-    }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 }

@@ -39,10 +39,12 @@
                 android:layout_marginEnd="24dp"
                 android:text="750.000 TL"
                 android:textColor="@color/red"
+                android:ellipsize="end"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/card_home_description"
@@ -50,13 +52,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
+                android:ellipsize="end"
                 android:text="Denize Sıfır Villa"
                 android:textColor="#3F51B5"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/card_home_icon"
+                app:layout_constraintEnd_toStartOf="@+id/card_price"
+                app:layout_constraintHorizontal_bias="0.037"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/card_location"
@@ -64,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Mannathan ABD"
+                android:ellipsize="end"
                 android:textColor="#3F51B5"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/card_home_description"
@@ -102,10 +109,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
 
-                android:layout_marginBottom="10dp"
                 android:src="@drawable/ic_outline_bed_24"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/card_sq_textView"
                 app:layout_constraintStart_toEndOf="@+id/card_sq_textView"
+                app:layout_constraintTop_toTopOf="@+id/card_sq_textView"
                 app:tint="#3F51B5" />
 
             <TextView

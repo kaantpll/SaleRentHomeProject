@@ -71,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Snackbar.make(view,"Register Success",3000).show();
                     Intent intent = new Intent(SignUpActivity.this, FeedActivity.class);
                     startActivity(intent);
-                    registerToDatabase(phoneNumber.toString(),age.toString(),emailText.toString(),userName.toString(),passwordText.toString());
+                    registerToDatabase(phoneNumber.getText().toString(),age.getText().toString(),emailText.getText().toString(),userName.getText().toString(),passwordText.getText().toString());
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

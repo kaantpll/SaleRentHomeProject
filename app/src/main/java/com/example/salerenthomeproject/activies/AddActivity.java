@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -53,7 +54,7 @@ public class AddActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private Button addPostButton;
     Uri imageData;
-    private TextInputEditText phone,description,attribute,rentOrSale,price;
+    private TextInputEditText phone,description,rentOrSale,price,attribute;
     private EditText sq , bedCount, bathCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class AddActivity extends AppCompatActivity {
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharePost(phone.toString(),description.toString(),attribute.toString(),sq.toString(),rentOrSale.toString(),bedCount.toString(),bathCount.toString(),price.toString());
+                sharePost(phone.getText().toString(),description.getText().toString(),attribute.getText().toString(),sq.getText().toString(),rentOrSale.getText().toString(),bedCount.getText().toString(),bathCount.getText().toString(),price.getText().toString());
             }
         });
 
@@ -97,10 +98,10 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-
     private void sharePost(String phoneNumber, String description, String attribute, String sq, String rentOrSale, String bedCount, String bathCount,String price) {
 
 
+        Toast.makeText(this,attribute.trim(),Toast.LENGTH_SHORT).show();
         if(imageData != null){
 
             UUID uuid = UUID.randomUUID();
@@ -115,7 +116,7 @@ public class AddActivity extends AppCompatActivity {
 
 
                             String downLoadUrl = uri.toString();
-                            Map<String, Object> post = new HashMap<>();
+                            HashMap<String, Object> post = new HashMap<>();
                             post.put("phone",phoneNumber);
                             post.put("description",description);
                             post.put("attribute",attribute);
@@ -143,9 +144,6 @@ public class AddActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             });
-
-
-
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
