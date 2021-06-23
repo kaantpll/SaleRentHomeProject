@@ -1,11 +1,13 @@
 package com.example.salerenthomeproject.models;
 
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "posts")
-public class Post {
+public class Post{
 
     @ColumnInfo(name = "phone")
     private String phone;
@@ -25,8 +27,8 @@ public class Post {
     private String imageUrl;
     @ColumnInfo(name = "price")
     private String price;
-    @PrimaryKey
-    private int id ;
+    @PrimaryKey(autoGenerate = true)
+    private int pid ;
 
 
 
@@ -45,6 +47,14 @@ public class Post {
         this.imageUrl = imageUrl;
         this.price = price;
 
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public String getPhone() {

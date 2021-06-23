@@ -1,4 +1,4 @@
-package com.example.salerenthomeproject;
+package com.example.salerenthomeproject.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,31 +9,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.salerenthomeproject.R;
+import com.example.salerenthomeproject.util.map.DrawDistance;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
+    private DrawDistance drawMap = new DrawDistance();
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            LatLng start= new LatLng(36.891326579165394, 30.712792656541104);
+
+            googleMap.addMarker(new MarkerOptions().position(start).title("Marker in Antalya").snippet("Antalya is city of Turkey"));
+            CameraPosition a = new CameraPosition.Builder().target(start).tilt(17).zoom(10f).bearing(30f).build();
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(a));
+            googleMap.getUiSettings().isZoomControlsEnabled();
+            googleMap.getUiSettings().isCompassEnabled();
+            googleMap.getUiSettings().isMapToolbarEnabled();
+            googleMap.getUiSettings().isZoomGesturesEnabled();
+            googleMap.getUiSettings().isScrollGesturesEnabledDuringRotateOrZoom();
+            googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+            drawMap.addPolyLine(googleMap);
+
         }
     };
 

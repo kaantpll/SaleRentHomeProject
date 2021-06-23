@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+
 }
 
 android {
@@ -45,6 +46,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
@@ -57,4 +60,18 @@ dependencies {
 
     //RxJava
     implementation "io.reactivex.rxjava3:rxjava:3.0.13"
+
+
+
+    //Ktx
+    implementation "androidx.core:core-ktx:1.5.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "androidx.navigation:navigation-runtime-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    //for activity
+    implementation "androidx.activity:activity-ktx:1.2.2"
+//for fragment
+    implementation "androidx.fragment:fragment-ktx:1.3.2"
 }
