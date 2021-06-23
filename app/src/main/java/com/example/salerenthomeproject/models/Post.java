@@ -1,5 +1,6 @@
 package com.example.salerenthomeproject.models;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
@@ -7,7 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "posts")
-public class Post{
+public class Post implements Parcelable{
 
     @ColumnInfo(name = "phone")
     private String phone;
@@ -48,6 +49,31 @@ public class Post{
         this.price = price;
 
     }
+
+    protected Post(Parcel in) {
+        phone = in.readString();
+        description = in.readString();
+        attribute = in.readString();
+        sq = in.readString();
+        bedCount = in.readString();
+        rentOrSale = in.readString();
+        bathCount = in.readString();
+        imageUrl = in.readString();
+        price = in.readString();
+        pid = in.readInt();
+    }
+
+    public static final Creator<Post> CREATOR = new Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 
     public int getPid() {
         return pid;
@@ -129,4 +155,22 @@ public class Post{
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(phone);
+        dest.writeString(description);
+        dest.writeString(attribute);
+        dest.writeString(sq);
+        dest.writeString(bedCount);
+        dest.writeString(rentOrSale);
+        dest.writeString(bathCount);
+        dest.writeString(imageUrl);
+        dest.writeString(price);
+        dest.writeInt(pid);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.salerenthomeproject.ui;
 
+import android.app.Application;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +57,7 @@ public class HomeFragment extends Fragment {
         rv = view.findViewById(R.id.rv);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new HomeFragmentAdapter(posts);
+        adapter = new HomeFragmentAdapter(posts,requireContext());
         rv.setAdapter(adapter);
 
 
@@ -68,8 +70,6 @@ public class HomeFragment extends Fragment {
         collectionReference.orderBy("price", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
-
                     if(value != null){
                         for (DocumentSnapshot snapshot : value.getDocuments()){
                             Map<String,Object> data = snapshot.getData();
@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment {
                             Post p = new Post(phone,description,attribute,sq,bedCount,rentOrSale,bathCount,imageUrl,price);
 
                             posts.add(p);
+
                             adapter.notifyDataSetChanged();
                         }
                     }

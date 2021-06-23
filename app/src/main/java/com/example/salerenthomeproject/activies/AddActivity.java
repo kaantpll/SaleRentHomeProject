@@ -46,7 +46,7 @@ import java.util.UUID;
 public class AddActivity extends AppCompatActivity {
 
     Bitmap selectedImage;
-    ImageView imageView;
+    private ImageView imageView,back;;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -68,6 +68,8 @@ public class AddActivity extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
+        back = findViewById(R.id.backAdd);
+
         imageView = findViewById(R.id.imageView3);
         phone = findViewById(R.id.phoneAdd);
         description = findViewById(R.id.descriptionAdd);
@@ -81,6 +83,15 @@ public class AddActivity extends AppCompatActivity {
 
         addPostButton = findViewById(R.id.addPostBtn);
 
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(AddActivity.this,FeedActivity.class);
+                startActivity(a);
+            }
+        });
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override

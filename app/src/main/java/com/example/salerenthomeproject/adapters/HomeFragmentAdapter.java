@@ -1,5 +1,8 @@
 package com.example.salerenthomeproject.adapters;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,10 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.salerenthomeproject.R;
+import com.example.salerenthomeproject.activies.AddActivity;
 import com.example.salerenthomeproject.models.Post;
+import com.example.salerenthomeproject.ui.HomeFragment;
+import com.example.salerenthomeproject.ui.HomeFragmentDirections;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,8 +27,9 @@ import java.util.List;
 public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.MyViewHolder> {
 
     private List<Post> postList;
-
-    public HomeFragmentAdapter(List<Post> postList){
+    private Context contextA;
+    public HomeFragmentAdapter(List<Post> postList,Context context){
+        this.contextA = context;
         this.postList = postList;
     }
 
@@ -46,10 +55,23 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
         holder.sq.setText(postModel.getSq()+"Sqft");
 
 
+        final NavController navController = Navigation.findNavController((Activity) contextA,R.id.containerFragment);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                HomeFragmentDirections.ActionHomeFragmentToDescriptionFragment action = HomeFragmentDirections.actionHomeFragmentToDescriptionFragment(postModel);
+                navController.navigate(action);
+            }
+        });
+
+
     }
 
     @Override
     public int getItemCount() {
+
+
         return postList.size();
     }
 

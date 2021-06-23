@@ -12,7 +12,6 @@
         android:layout_width="439dp"
         android:layout_height="810dp"
         app:defaultNavHost="true"
-
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
