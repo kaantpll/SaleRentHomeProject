@@ -19,16 +19,16 @@ import io.reactivex.Single;
 public interface PostDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     Completable insert(Post post);
+     void insert(Post post);
 
     @Delete
-    Completable delete(Post post);
+    void delete(Post post);
 /*
     @Query("select * from posts where attribute")
     Post findByName(String s);
 */
     @Query("Select * from posts")
-    Flowable<List<Post>> getAllPost();
+    LiveData<List<Post>> getAllPost();
 
 
 }

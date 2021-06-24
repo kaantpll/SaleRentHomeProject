@@ -1,5 +1,7 @@
 package com.example.salerenthomeproject.database;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.salerenthomeproject.models.Post;
 
 import java.util.List;
@@ -10,8 +12,8 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public interface RepositoryService {
 
-    Flowable getAll();
-    Completable insert(Post post);
-    Completable delete(Post post);
+    LiveData<List<Post>> getAll();
+    void insert(Post post);
+    void delete(Post post);
 
 }

@@ -26,7 +26,7 @@ import java.util.List;
 
 public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.MyViewHolder> {
 
-    private List<Post> postList;
+     List<Post> postList;
     private Context contextA;
     public HomeFragmentAdapter(List<Post> postList,Context context){
         this.contextA = context;
@@ -48,7 +48,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
         Post postModel = postList.get(position);
         Picasso.get().load(postModel.getImageUrl()).into(holder.homeImage);
         holder.price.setText(postModel.getPrice());
-        //holder.location.setText(postModel.getLocation());
+        holder.location.setText(postModel.getLocation());
         holder.homeAttribute.setText(postModel.getAttribute());
         holder.bath.setText(postModel.getBathCount()+"Baths");
         holder.bed.setText(postModel.getBedCount()+"Bed");
@@ -64,14 +64,10 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
                 navController.navigate(action);
             }
         });
-
-
     }
 
     @Override
     public int getItemCount() {
-
-
         return postList.size();
     }
 

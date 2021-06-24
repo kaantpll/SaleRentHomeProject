@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_mapsFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
+        <argument
+            android:name="kordinat"
+            app:argType="com.example.salerenthomeproject.models.Post" />
     </fragment>
     <fragment
         android:id="@+id/descriptionFragment"
@@ -51,5 +54,8 @@
         <argument
             android:name="post"
             app:argType="com.example.salerenthomeproject.models.Post" />
+        <action
+            android:id="@+id/action_descriptionFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
 </navigation>

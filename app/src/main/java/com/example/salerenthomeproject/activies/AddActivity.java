@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.salerenthomeproject.R;
 import com.example.salerenthomeproject.models.Post;
+import com.example.salerenthomeproject.viewmodel.HomeFragmentViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +45,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -54,8 +58,11 @@ public class AddActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private Button addPostButton;
     Uri imageData;
-    private TextInputEditText phone,description,rentOrSale,price,attribute;
+    private TextInputEditText phone,description,rentOrSale,price,attribute,latitude,longitude,locationText;
     private EditText sq , bedCount, bathCount;
+
+    private HomeFragmentViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +77,10 @@ public class AddActivity extends AppCompatActivity {
 
         back = findViewById(R.id.backAdd);
 
+        latitude = findViewById(R.id.locationLatitude);
+        longitude = findViewById(R.id.locationLongitude);
+        locationText = findViewById(R.id.locationAdd);
+
         imageView = findViewById(R.id.imageView3);
         phone = findViewById(R.id.phoneAdd);
         description = findViewById(R.id.descriptionAdd);
@@ -81,6 +92,7 @@ public class AddActivity extends AppCompatActivity {
         price = findViewById(R.id.priceAdd);
 
 
+        viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
         addPostButton = findViewById(R.id.addPostBtn);
 
 
@@ -96,7 +108,11 @@ public class AddActivity extends AppCompatActivity {
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharePost(phone.getText().toString(),description.getText().toString(),attribute.getText().toString(),sq.getText().toString(),rentOrSale.getText().toString(),bedCount.getText().toString(),bathCount.getText().toString(),price.getText().toString());
+                sharePost(phone.getText().toString(),description.getText().toString(),attribute.getText().toString(),sq.getText().toString(),rentOrSale.getText().toString(),bedCount.getText().toString(),bathCount.getText().toString(),price.getText().toString()
+                ,locationText.getText().toString(),latitude.getText().toString(),longitude.getText().toString()
+                );
+
+
             }
         });
 
@@ -109,7 +125,8 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    private void sharePost(String phoneNumber, String description, String attribute, String sq, String rentOrSale, String bedCount, String bathCount,String price) {
+    private void sharePost(String phoneNumber, String description, String attribute,
+                           String sq, String rentOrSale, String bedCount, String bathCount,String price,String location,String latitude,String longitude) {
 
 
         Toast.makeText(this,attribute.trim(),Toast.LENGTH_SHORT).show();
@@ -125,7 +142,6 @@ public class AddActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
 
-
                             String downLoadUrl = uri.toString();
                             HashMap<String, Object> post = new HashMap<>();
                             post.put("phone",phoneNumber);
@@ -137,15 +153,20 @@ public class AddActivity extends AppCompatActivity {
                             post.put("bathCount",bathCount);
                             post.put("price",price);
                             post.put("imageUrl",downLoadUrl);
+                            post.put("location",location);
+                            post.put("latitude",latitude);
+                            post.put("longitude",longitude);
 
+                            //Post p = new Post(phoneNumber,description,attribute,sq,bedCount,rentOrSale,bathCount,downLoadUrl,price);
                             db.collection("Post").add(post).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(AddActivity.this,"Success",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText  (AddActivity.this,"Success",Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(AddActivity.this,FeedActivity.class);
-                                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(i);
+                                         //viewModel.insert(p);
+
                                     }
 
                                 }

@@ -1,6 +1,9 @@
 package com.example.salerenthomeproject.database;
 
 import android.app.Application;
+import android.os.AsyncTask;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.salerenthomeproject.models.Post;
 
@@ -18,18 +21,41 @@ public class Repository implements RepositoryService{
         postDao = db.postDao();
     }
 
+
     @Override
-    public Flowable getAll() {
+    public LiveData<List<Post>> getAll() {
         return postDao.getAllPost();
     }
 
     @Override
-    public Completable insert(Post post) {
-        return postDao.insert(post);
+    public void insert(Post post) {
+        new InsertAsyncTask().execute(post);
     }
 
     @Override
-    public Completable delete(Post post) {
-        return postDao.delete(post);
+    public void delete(Post post) {
+        postDao.insert(post);
+    }/*
+    static class InsertAsyncTask extends AsyncTask<List<Post>,Void,Void> {
+        private PostDao postDao;
+        InsertAsyncTask(DatabaseHelper db)
+        {
+            postDao=db.postDao();
+        }
+        @Override
+        protected Void doInBackground(List<Post>... lists) {
+            postDao.insert((Post) lists[0]);
+            return null;
+        }
+    }*/
+    static class InsertAsyncTask extends AsyncTask<Post,Void,Void>{
+        PostDao postDao;
+
+        @Override
+        protected Void doInBackground(Post... posts) {
+            postDao.insert(posts[0]);
+            return  null;
+        }
     }
 }
+

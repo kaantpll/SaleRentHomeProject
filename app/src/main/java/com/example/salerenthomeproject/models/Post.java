@@ -28,6 +28,13 @@ public class Post implements Parcelable{
     private String imageUrl;
     @ColumnInfo(name = "price")
     private String price;
+    @ColumnInfo(name = "location")
+    private String location;
+    @ColumnInfo(name = "latitude")
+    private String latitude;
+    @ColumnInfo(name="longitude")
+    private String longitude;
+
     @PrimaryKey(autoGenerate = true)
     private int pid ;
 
@@ -37,7 +44,9 @@ public class Post implements Parcelable{
 
     }
 
-    public Post(String phone, String description, String attribute, String sq, String bedCount, String rentOrSale, String bathCount,String imageUrl,String price) {
+
+
+    public Post(String phone, String description, String attribute, String sq, String bedCount, String rentOrSale, String bathCount, String imageUrl, String price,String location,String latitude, String longitude) {
         this.phone = phone;
         this.description = description;
         this.attribute = attribute;
@@ -47,6 +56,9 @@ public class Post implements Parcelable{
         this.bathCount = bathCount;
         this.imageUrl = imageUrl;
         this.price = price;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
 
     }
 
@@ -60,6 +72,9 @@ public class Post implements Parcelable{
         bathCount = in.readString();
         imageUrl = in.readString();
         price = in.readString();
+        location=in.readString();
+        latitude = in.readString();
+        longitude = in.readString();
         pid = in.readInt();
     }
 
@@ -74,6 +89,34 @@ public class Post implements Parcelable{
             return new Post[size];
         }
     };
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public static Creator<Post> getCREATOR() {
+        return CREATOR;
+    }
 
     public int getPid() {
         return pid;

@@ -1,6 +1,8 @@
 package com.example.salerenthomeproject.ui;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,14 +15,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.salerenthomeproject.R;
+import com.example.salerenthomeproject.models.Post;
 import com.squareup.picasso.Picasso;
 
 public class DescriptionFragment extends Fragment {
 
-    private TextView attributeText,priceText,bedCount,bathCount,sq,sentOrRate;
-    private ImageView callPhone,addFavorite,homeImage,backImage;
+    private TextView attributeText;
+    private TextView priceText;
+    private TextView bedCount;
+    private TextView bathCount;
+    private TextView sq;
+    private TextView sentOrRate;
+    private TextView location;
+    private String latitude,longitude;
+    private ImageView callPhone,addFavorite,homeImage,backImage,goMap;
     private Button sendMessage;
     private DescriptionFragmentArgs args ;
     private NavController controller;
@@ -44,20 +55,37 @@ public class DescriptionFragment extends Fragment {
         bathCount = view.findViewById(R.id.descriptionBathCount);
         sq = view.findViewById(R.id.descriptionSq);
         homeImage = view.findViewById(R.id.description_imageView);
-
+        location = view.findViewById(R.id.description_location);
         backImage = view.findViewById(R.id.backImage);
         callPhone = view.findViewById(R.id.callImageView);
         addFavorite = view.findViewById(R.id.favImageView);
+        goMap = view.findViewById(R.id.goMap);
 
         sendMessage = view.findViewById(R.id.sendMessage);
-
+        sentOrRate = view.findViewById(R.id.descriptionSaleOrRate);
+        longitude = args.getPost().getLongitude();
+        latitude = args.getPost().getLatitude();
         attributeText.setText(args.getPost().getAttribute());
         priceText.setText(args.getPost().getPrice());
         bedCount.setText(args.getPost().getBedCount());
+        sentOrRate.setText(args.getPost().getRentOrSale());
         bathCount.setText(args.getPost().getBathCount());
-
+        location.setText(args.getPost().getLocation());
         Picasso.get().load(args.getPost().getImageUrl()).into(homeImage);
         sq.setText(args.getPost().getSq());
+        final NavController navController = Navigation.findNavController(getActivity(),R.id.containerFragment);
+        goMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Post p = new Post(args.getPost().getPhone(),args.getPost().getDescription(),args.getPost().getAttribute(),args.getPost().getSq(),
+                        args.getPost().getBedCount(),args.getPost().getRentOrSale(),args.getPost().getRentOrSale(),args.getPost().getImageUrl(),args.getPost().getPrice()
+                ,args.getPost().getLocation(),args.getPost().getLatitude(),args.getPost().getLongitude());
+                DescriptionFragmentDirections.ActionDescriptionFragmentToMapsFragment action = DescriptionFragmentDirections.actionDescriptionFragmentToMapsFragment(p);
+                navController.navigate(action);
+            }
+        });
+
+        Uri c = Uri.parse("tel:" + args.getPost().getPhone());
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,14 +97,16 @@ public class DescriptionFragment extends Fragment {
         callPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            Intent call = new Intent(Intent.ACTION_DIAL);
+            call.setData(c);
+            startActivity(call);
             }
         });
 
         addFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //gönder
+                Toast.makeText(requireContext(),"Favorilere Eklendi",Toast.LENGTH_SHORT).show();
             }
         });
 
