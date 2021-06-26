@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.salerenthomeproject.models.Post;
 
-@Database(entities = {Post.class},version = 1)
+@Database(entities = {Post.class},version = 2,exportSchema = false)
 public abstract class DatabaseHelper extends RoomDatabase {
     public abstract PostDao postDao();
 

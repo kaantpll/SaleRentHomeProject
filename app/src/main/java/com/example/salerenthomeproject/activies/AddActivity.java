@@ -42,6 +42,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -157,7 +158,7 @@ public class AddActivity extends AppCompatActivity {
                             post.put("latitude",latitude);
                             post.put("longitude",longitude);
 
-                            //Post p = new Post(phoneNumber,description,attribute,sq,bedCount,rentOrSale,bathCount,downLoadUrl,price);
+                            Post p = new Post(phoneNumber,description,attribute,sq,bedCount,rentOrSale,bathCount,downLoadUrl,price,location,latitude,longitude);
                             db.collection("Post").add(post).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -165,7 +166,13 @@ public class AddActivity extends AppCompatActivity {
                                         Toast.makeText  (AddActivity.this,"Success",Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(AddActivity.this,FeedActivity.class);
                                         startActivity(i);
-                                         //viewModel.insert(p);
+                                        try {
+                                            TimeUnit.SECONDS.sleep(3);
+                                            viewModel.insert(p);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        viewModel.insert(p);
 
                                     }
 

@@ -29,7 +29,13 @@ public class Repository implements RepositoryService{
 
     @Override
     public void insert(Post post) {
-        new InsertAsyncTask().execute(post);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                postDao.insert(post);
+
+            }
+        }).start();
     }
 
     @Override
@@ -47,7 +53,7 @@ public class Repository implements RepositoryService{
             postDao.insert((Post) lists[0]);
             return null;
         }
-    }*/
+    }*//*
     static class InsertAsyncTask extends AsyncTask<Post,Void,Void>{
         PostDao postDao;
 
@@ -56,6 +62,6 @@ public class Repository implements RepositoryService{
             postDao.insert(posts[0]);
             return  null;
         }
-    }
+    }*/
 }
 

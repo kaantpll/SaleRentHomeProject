@@ -18,7 +18,7 @@ import io.reactivex.Single;
 @Dao
 public interface PostDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
      void insert(Post post);
 
     @Delete

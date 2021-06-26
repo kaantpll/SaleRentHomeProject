@@ -40,8 +40,13 @@ public class MapsFragment extends Fragment {
 
             drawMap.addPolyLine(googleMap);
             googleMap.isMyLocationEnabled();
-        args=MapsFragmentArgs.fromBundle(getArguments());
-            Log.d("map",args.getKordinat().getAttribute());
+
+
+/*
+                args=MapsFragmentArgs.fromBundle(getArguments());
+                Log.d("map",args.getKordinat().getAttribute());
+
+*/
 
             
         }
