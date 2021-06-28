@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.salerenthomeproject.adapters.HomeFragmentAdapter;
@@ -30,7 +31,6 @@ public class HomeFragmentViewModel extends AndroidViewModel {
     private Repository repo;
 
 
-
     public HomeFragmentViewModel(@NonNull Application application) {
         super(application);
         repo = new Repository(application);
@@ -46,6 +46,9 @@ public class HomeFragmentViewModel extends AndroidViewModel {
 
     public LiveData<List<Post>> getAll(){
         return repo.getAll();
+    }
+    public LiveData<List<Post>> search(String query){
+        return  repo.search(query);
     }
 
 

@@ -14,11 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.salerenthomeproject.R;
 import com.example.salerenthomeproject.models.Post;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 public class DescriptionFragment extends Fragment {
@@ -27,7 +31,7 @@ public class DescriptionFragment extends Fragment {
     private TextView priceText;
     private TextView bedCount;
     private TextView bathCount;
-    private TextView sq;
+    private TextView sq,scrollViewText;
     private TextView sentOrRate;
     private TextView location;
     private String latitude,longitude;
@@ -47,8 +51,14 @@ public class DescriptionFragment extends Fragment {
         args =DescriptionFragmentArgs.fromBundle(getArguments());
 
         controller= Navigation.findNavController((Activity) requireContext(),R.id.containerFragment);
+        BottomAppBar navBar = getActivity().findViewById(R.id.bottomAppBar);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+
+        navBar.setVisibility(View.GONE);
+        fab.setVisibility(View.GONE);
 
 
+        scrollViewText = view.findViewById(R.id.scrollViewText);
         attributeText = view.findViewById(R.id.description_attribute);
         priceText = view.findViewById(R.id.description_price);
         bedCount = view.findViewById(R.id.descriptionBedCount);
@@ -61,7 +71,7 @@ public class DescriptionFragment extends Fragment {
         addFavorite = view.findViewById(R.id.favImageView);
         goMap = view.findViewById(R.id.goMap);
 
-        sendMessage = view.findViewById(R.id.sendMessage);
+
         sentOrRate = view.findViewById(R.id.descriptionSaleOrRate);
         longitude = args.getPost().getLongitude();
         latitude = args.getPost().getLatitude();
@@ -72,7 +82,10 @@ public class DescriptionFragment extends Fragment {
         bathCount.setText(args.getPost().getBathCount());
         location.setText(args.getPost().getLocation());
         Picasso.get().load(args.getPost().getImageUrl()).into(homeImage);
+        scrollViewText.setText(args.getPost().getDescription());
         sq.setText(args.getPost().getSq());
+
+
         final NavController navController = Navigation.findNavController(getActivity(),R.id.containerFragment);
         goMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +103,10 @@ public class DescriptionFragment extends Fragment {
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            controller.navigate(R.id.action_descriptionFragment_to_homeFragment);
+                navBar.setVisibility(View.VISIBLE);
+                fab.setVisibility(View.VISIBLE);
+                controller.navigate(R.id.action_descriptionFragment_to_homeFragment);
+
             }
         });
 
@@ -112,4 +128,6 @@ public class DescriptionFragment extends Fragment {
 
         return  view;
     }
+
+
 }

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.salerenthomeproject.R;
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rv;
     private HomeFragmentViewModel homeFragmentViewModel;
     private TextView result;
+    private SearchView searchView;
 
     public HomeFragment(){}
 
@@ -57,14 +59,29 @@ public class HomeFragment extends Fragment {
 
         result = view.findViewById(R.id.result_count);
         db = FirebaseFirestore.getInstance();
-
+        searchView = view.findViewById(R.id.searchView);
         homeFragmentViewModel= new ViewModelProvider((ViewModelStoreOwner) requireContext()).get(HomeFragmentViewModel.class);
 
         posts = new ArrayList<>();
 
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText != null){
+                    search(newText);
+                }
+                return false;
+            }
+        });
 
         getDataFromFirebase();
+        homeFragmentViewModel.getAll();
         rv = view.findViewById(R.id.rv);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -73,8 +90,15 @@ public class HomeFragment extends Fragment {
         rv.setAdapter(adapter);
 
 
+        adapter.notifyDataSetChanged();
 
         return  view;
+    }
+
+    public void search(String q){
+        homeFragmentViewModel.search(q);
+        adapter.notifyDataSetChanged();
+
     }
 
     public void getDataFromFirebase(){

@@ -28,9 +28,9 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.salerenthomeproject.ChatFragment"
+        android:name="com.example.salerenthomeproject.ui.ProfileFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.salerenthomeproject.ui.MapsFragment"

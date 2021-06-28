@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.salerenthomeproject.models.Post;
 
@@ -23,12 +24,19 @@ public interface PostDao {
 
     @Delete
     void delete(Post post);
-/*
-    @Query("select * from posts where attribute")
-    Post findByName(String s);
-*/
+
+    @Update
+    void update(Post post);
+
     @Query("Select * from posts")
     LiveData<List<Post>> getAllPost();
+
+
+
+    @Query("SELECT * FROM posts where phone LIKE :query")
+    LiveData<List<Post>> search(String query);
+
+
 
 
 }

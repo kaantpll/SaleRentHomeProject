@@ -41,27 +41,17 @@ public class Repository implements RepositoryService{
     @Override
     public void delete(Post post) {
         postDao.insert(post);
-    }/*
-    static class InsertAsyncTask extends AsyncTask<List<Post>,Void,Void> {
-        private PostDao postDao;
-        InsertAsyncTask(DatabaseHelper db)
-        {
-            postDao=db.postDao();
-        }
-        @Override
-        protected Void doInBackground(List<Post>... lists) {
-            postDao.insert((Post) lists[0]);
-            return null;
-        }
-    }*//*
-    static class InsertAsyncTask extends AsyncTask<Post,Void,Void>{
-        PostDao postDao;
+    }
 
-        @Override
-        protected Void doInBackground(Post... posts) {
-            postDao.insert(posts[0]);
-            return  null;
-        }
-    }*/
+    @Override
+    public void update(Post post) {
+        postDao.update(post);
+    }
+
+    @Override
+    public LiveData<List<Post>> search(String query) {
+        return postDao.search(query);
+    }
+
 }
 
