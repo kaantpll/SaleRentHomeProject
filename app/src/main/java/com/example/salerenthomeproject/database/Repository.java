@@ -51,6 +51,7 @@ public class Repository implements RepositoryService{
     @Override
     public LiveData<List<Post>> search(String query) {
         return postDao.search(query);
+
     }
 
 }

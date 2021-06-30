@@ -1,15 +1,13 @@
 package com.example.salerenthomeproject.ui;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +22,7 @@ import android.widget.TextView;
 import com.example.salerenthomeproject.R;
 import com.example.salerenthomeproject.adapters.HomeFragmentAdapter;
 import com.example.salerenthomeproject.models.Post;
+import com.example.salerenthomeproject.util.LiveDataConverter;
 import com.example.salerenthomeproject.viewmodel.HomeFragmentViewModel;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,8 +33,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
 
@@ -46,6 +45,9 @@ public class HomeFragment extends Fragment {
     private HomeFragmentViewModel homeFragmentViewModel;
     private TextView result;
     private SearchView searchView;
+    private ArrayList<Post> searchPost;
+    private LiveDataConverter liveDataConverter;
+
 
     public HomeFragment(){}
 
@@ -63,8 +65,8 @@ public class HomeFragment extends Fragment {
         homeFragmentViewModel= new ViewModelProvider((ViewModelStoreOwner) requireContext()).get(HomeFragmentViewModel.class);
 
         posts = new ArrayList<>();
-
-
+        searchPost = new ArrayList<>();
+/*
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -76,11 +78,12 @@ public class HomeFragment extends Fragment {
                 if(newText != null){
                     search(newText);
                 }
-                return false;
+                return true;
             }
         });
-
+*/
         getDataFromFirebase();
+
         homeFragmentViewModel.getAll();
         rv = view.findViewById(R.id.rv);
         rv.setHasFixedSize(true);
@@ -95,9 +98,22 @@ public class HomeFragment extends Fragment {
         return  view;
     }
 
-    public void search(String q){
-        homeFragmentViewModel.search(q);
-        adapter.notifyDataSetChanged();
+    public void search(String searchText){
+
+        searchText = "%"+searchText+"%";
+        homeFragmentViewModel.search(searchText).observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+
+                rv.setHasFixedSize(true);
+                rv.setLayoutManager(new LinearLayoutManager(requireContext()));
+                HomeFragmentAdapter mAdapter = new HomeFragmentAdapter(posts,requireContext());
+                rv.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
+
 
     }
 

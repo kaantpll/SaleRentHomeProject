@@ -16,6 +16,6 @@ public interface RepositoryService {
     void insert(Post post);
     void delete(Post post);
     void update(Post post);
-    LiveData<List<Post>> search(String query);
+   LiveData<List<Post>>search(String query);
 
 }

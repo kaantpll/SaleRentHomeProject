@@ -23,7 +23,11 @@ import com.example.salerenthomeproject.models.Post;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DescriptionFragment extends Fragment {
 
@@ -39,6 +43,7 @@ public class DescriptionFragment extends Fragment {
     private Button sendMessage;
     private DescriptionFragmentArgs args ;
     private NavController controller;
+    private FirebaseFirestore db;
 
     public DescriptionFragment() {
     }
@@ -50,6 +55,7 @@ public class DescriptionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_description, container, false);
         args =DescriptionFragmentArgs.fromBundle(getArguments());
 
+        db = FirebaseFirestore.getInstance();
         controller= Navigation.findNavController((Activity) requireContext(),R.id.containerFragment);
         BottomAppBar navBar = getActivity().findViewById(R.id.bottomAppBar);
         FloatingActionButton fab = getActivity().findViewById(R.id.fab);
@@ -120,9 +126,10 @@ public class DescriptionFragment extends Fragment {
         });
 
         addFavorite.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Toast.makeText(requireContext(),"Favorilere Eklendi",Toast.LENGTH_SHORT).show();
+
             }
         });
 

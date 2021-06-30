@@ -51,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         signUpBtn = findViewById(R.id.signUpButton);
 
+
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void SignUpOnClick(View view){
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
+
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -91,6 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("email",email);
         user.put("username",username);
         user.put("password",password);
+
 
         db.collection("User").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

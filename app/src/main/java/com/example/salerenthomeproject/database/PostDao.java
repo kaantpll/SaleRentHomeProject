@@ -33,7 +33,7 @@ public interface PostDao {
 
 
 
-    @Query("SELECT * FROM posts where phone LIKE :query")
+    @Query("SELECT * FROM posts where attribute LIKE :query")
     LiveData<List<Post>> search(String query);
 
 
