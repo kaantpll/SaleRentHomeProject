@@ -3,6 +3,7 @@ package com.example.salerenthomeproject.ui;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -24,15 +25,19 @@ import com.example.salerenthomeproject.adapters.HomeFragmentAdapter;
 import com.example.salerenthomeproject.models.Post;
 import com.example.salerenthomeproject.util.LiveDataConverter;
 import com.example.salerenthomeproject.viewmodel.HomeFragmentViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +71,7 @@ public class HomeFragment extends Fragment {
 
         posts = new ArrayList<>();
         searchPost = new ArrayList<>();
-/*
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -81,16 +86,17 @@ public class HomeFragment extends Fragment {
                 return true;
             }
         });
-*/
+
         getDataFromFirebase();
 
-        homeFragmentViewModel.getAll();
+       // homeFragmentViewModel.getAll();
         rv = view.findViewById(R.id.rv);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new HomeFragmentAdapter(posts,requireContext());
 
         rv.setAdapter(adapter);
+
 
 
         adapter.notifyDataSetChanged();
@@ -101,7 +107,8 @@ public class HomeFragment extends Fragment {
     public void search(String searchText){
 
         searchText = "%"+searchText+"%";
-        homeFragmentViewModel.search(searchText).observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+
+       /* homeFragmentViewModel.search(searchText).observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
 
@@ -112,7 +119,22 @@ public class HomeFragment extends Fragment {
                 mAdapter.notifyDataSetChanged();
             }
         });
+*/
 
+        CollectionReference collectionReference = db.collection("Post");
+
+        collectionReference.whereEqualTo("bath",searchText).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+      @Override
+      public void onComplete(@NonNull Task<QuerySnapshot> task) {
+          if (task.isSuccessful()) {
+              for (QueryDocumentSnapshot document : task.getResult()) {
+                  Log.d("aTAG", document.getId() + " => " + document.getData());
+              }
+          } else {
+              Log.d("aTAG", "Error getting documents: ", task.getException());
+          }
+      }
+  });
 
 
     }

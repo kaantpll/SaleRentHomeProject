@@ -16,11 +16,11 @@ public class DrawDistance {
 
     public DrawDistance(){}
 
-    public void addPolyLine(GoogleMap map){
+    public void addPolyLine(GoogleMap map , LatLng startLng,LatLng endLTng){
 
         Polygon polygon = map.addPolygon(new PolygonOptions()
-        .add(new LatLng(36.840315861655974, 30.59576396751613))
-                .add(new LatLng(36.93389376514316, 30.745735926028004))
+        .add(startLng)
+                .add(endLTng)
                 .strokeColor(Color.RED)
                 .fillColor(Color.BLUE)
 

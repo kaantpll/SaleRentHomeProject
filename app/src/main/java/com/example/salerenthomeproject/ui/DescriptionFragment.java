@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,9 +21,14 @@ import android.widget.Toast;
 
 import com.example.salerenthomeproject.R;
 import com.example.salerenthomeproject.models.Post;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -129,11 +135,48 @@ public class DescriptionFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-
+                registerToFavoriteDatabase(args.getPost().getPhone(),args.getPost().getDescription(),args.getPost().getAttribute(),args.getPost().getSq(),
+                        args.getPost().getBedCount(),args.getPost().getRentOrSale(),args.getPost().getImageUrl(),args.getPost().getPrice()
+                        ,args.getPost().getLocation(),args.getPost().getLatitude(),args.getPost().getLongitude(),args.getPost().getBathCount());
             }
+
+
         });
 
         return  view;
+    }
+
+    private void registerToFavoriteDatabase(String phone, String description, String attribute, String sq, String bedCount, String rentOrSale,
+                                             String imageUrl, String price, String location, String latitude, String longitude,String bathCount) {
+
+        HashMap<String,Object> favorite = new HashMap<>();
+        favorite.put("phoneNumber",phone);
+        favorite.put("description",description);
+        favorite.put("attribute",attribute);
+        favorite.put("sq",sq);
+        favorite.put("bedCount",bedCount);
+        favorite.put("bathCount",bathCount);
+        favorite.put("rentOrSale",rentOrSale);
+        favorite.put("imageURl",imageUrl);
+        favorite.put("price",price);
+        favorite.put("location",location);
+        favorite.put("latitude",latitude);
+        favorite.put("longitude",longitude);
+
+        db.collection("Favorite").add(favorite).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(requireContext(),"Favorilere Eklendi",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
 
