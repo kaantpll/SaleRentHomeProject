@@ -43,7 +43,6 @@ public class LogInActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
         noHaveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,10 +59,7 @@ public class LogInActivity extends AppCompatActivity {
                 LogInButtonClick(v);
             }
         });
-
-
     }
-
     private void LogInButtonClick(View view){
         String userName = userNameText.getText().toString();
         String password = passwordText.getText().toString();

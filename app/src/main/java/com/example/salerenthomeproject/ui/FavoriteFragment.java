@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,10 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.salerenthomeproject.R;
 import com.example.salerenthomeproject.adapters.FavoriteFragmentAdapter;
 import com.example.salerenthomeproject.models.Post;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -32,6 +35,8 @@ public class FavoriteFragment extends Fragment {
     private FavoriteFragmentAdapter favoriteFragmentAdapter;
     private ArrayList<Post> favList;
     private FirebaseFirestore db;
+    private CollectionReference reference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,14 +45,45 @@ public class FavoriteFragment extends Fragment {
        db= FirebaseFirestore.getInstance();
        favList = new ArrayList<>();
 
+       reference = db.collection("Favorite");
         getDataFavoriteDatabase();
 
         rv = view.findViewById(R.id.recyclerViewFav);
+
        rv.setLayoutManager(new LinearLayoutManager(requireContext()));
        favoriteFragmentAdapter = new FavoriteFragmentAdapter(favList,favList);
         rv.setAdapter(favoriteFragmentAdapter);
 
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                  RecyclerView.ViewHolder target) {
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
+                int layout = viewHolder.getLayoutPosition();
+                Post p = favoriteFragmentAdapter.favoriteList.get(layout);
+
+                db.collection("Favorite").document(reference.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //Log.d("DELETE", reference.getCol);
+                    }
+                });
+                favoriteFragmentAdapter.notifyDataSetChanged();
+
+
+                Toast.makeText(requireContext(),"sffsfs",Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(rv);
 
         return view;
     }

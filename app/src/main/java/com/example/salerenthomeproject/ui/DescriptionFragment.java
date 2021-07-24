@@ -88,7 +88,7 @@ public class DescriptionFragment extends Fragment {
         longitude = args.getPost().getLongitude();
         latitude = args.getPost().getLatitude();
         attributeText.setText(args.getPost().getAttribute());
-        priceText.setText(args.getPost().getPrice());
+        priceText.setText(args.getPost().getPrice()+" TL");
         bedCount.setText(args.getPost().getBedCount());
         sentOrRate.setText(args.getPost().getRentOrSale());
         bathCount.setText(args.getPost().getBathCount());

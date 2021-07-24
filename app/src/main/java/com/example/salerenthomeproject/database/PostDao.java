@@ -31,8 +31,6 @@ public interface PostDao {
     @Query("Select * from posts")
     LiveData<List<Post>> getAllPost();
 
-
-
     @Query("SELECT * FROM posts where attribute LIKE :query")
     LiveData<List<Post>> search(String query);
 

@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.salerenthomeproject.R;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,7 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private Button signUpBtn;
-
+    private TextView goTo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
         emailText = findViewById(R.id.emailSignUp);
         userName = findViewById(R.id.signUpUserName);
         passwordText =  findViewById(R.id.signUpPassword);
-
+        goTo  = findViewById(R.id.haveAccount);
         signUpBtn = findViewById(R.id.signUpButton);
 
 
@@ -58,6 +60,15 @@ public class SignUpActivity extends AppCompatActivity {
                 SignUpOnClick(v);
             }
         });
+
+        goTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(SignUpActivity.this, SignInButton.class);
+                startActivity(a);
+            }
+        });
+
 
 
     }
@@ -82,9 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Snackbar.make(view,e.getMessage(),3000).show();
             }
         });
-
     }
-
     private void registerToDatabase(String phoneNumber, String age, String email, String username, String password) {
 
         Map<String,Object> user = new HashMap<>();

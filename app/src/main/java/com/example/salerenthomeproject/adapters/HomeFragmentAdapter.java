@@ -47,7 +47,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
 
         Post postModel = postList.get(position);
         Picasso.get().load(postModel.getImageUrl()).into(holder.homeImage);
-        holder.price.setText(postModel.getPrice());
+        holder.price.setText(postModel.getPrice()+" TL");
         holder.location.setText(postModel.getLocation());
         holder.homeAttribute.setText(postModel.getAttribute());
         holder.bath.setText(postModel.getBathCount()+"Baths");

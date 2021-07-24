@@ -20,7 +20,7 @@ import java.util.List;
 
 public class FavoriteFragmentAdapter  extends RecyclerView.Adapter<FavoriteFragmentAdapter.MyViewHolder>{
 
-    List<Post> favoriteList;
+    public List<Post> favoriteList;
     private ArrayList<Post> contextA;
     public FavoriteFragmentAdapter(List<Post> postList, ArrayList<Post> context){
         this.contextA = context;
@@ -39,7 +39,7 @@ public class FavoriteFragmentAdapter  extends RecyclerView.Adapter<FavoriteFragm
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Post postModel = favoriteList.get(position);
         Picasso.get().load(postModel.getImageUrl()).into(holder.homeImage);
-        holder.price.setText(postModel.getPrice());
+        holder.price.setText(postModel.getPrice()+" TL");
         holder.location.setText(postModel.getLocation());
         holder.homeAttribute.setText(postModel.getAttribute());
         holder.bath.setText(postModel.getBathCount()+"Baths");
@@ -56,9 +56,13 @@ public class FavoriteFragmentAdapter  extends RecyclerView.Adapter<FavoriteFragm
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView homeAttribute,location,price,bath,bed,sq;
         public ImageView homeImage;
-
+        public ViewGroup mContainer;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.setFocusable(true);
+            itemView.setEnabled(true);
+
 
             homeAttribute = itemView.findViewById(R.id.card_home_description);
             location = itemView.findViewById(R.id.card_location);

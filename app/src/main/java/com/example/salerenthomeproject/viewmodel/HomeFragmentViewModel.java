@@ -16,7 +16,6 @@ import java.util.List;
 public class HomeFragmentViewModel extends AndroidViewModel {
 
 
-
     private Repository repo;
     private MutableLiveData<List<Post>> postList;
 

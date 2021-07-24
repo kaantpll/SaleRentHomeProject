@@ -53,7 +53,6 @@ public class HomeFragment extends Fragment {
     private ArrayList<Post> searchPost;
     private LiveDataConverter liveDataConverter;
 
-
     public HomeFragment(){}
 
     @SuppressLint("SetTextI18n")

@@ -126,8 +126,10 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    private void sharePost(String phoneNumber, String description, String attribute,
-                           String sq, String rentOrSale, String bedCount, String bathCount,String price,String location,String latitude,String longitude) {
+    private void sharePost(String phoneNumber,
+                           String description, String attribute,
+                           String sq, String rentOrSale, String bedCount,
+                           String bathCount,String price,String location,String latitude,String longitude) {
 
 
         Toast.makeText(this,attribute.trim(),Toast.LENGTH_SHORT).show();

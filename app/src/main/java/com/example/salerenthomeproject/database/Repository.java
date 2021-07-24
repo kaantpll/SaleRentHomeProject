@@ -21,7 +21,6 @@ public class Repository implements RepositoryService{
         postDao = db.postDao();
     }
 
-
     @Override
     public LiveData<List<Post>> getAll() {
         return postDao.getAllPost();
